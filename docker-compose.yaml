@@ -1,0 +1,22 @@
+services:
+  ###> doctrine/doctrine-bundle ###
+  database:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-app}
+      # Você deve DEFINITIVAMENTE mudar a senha em produção
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-ChangeMe}
+      MYSQL_USER: ${MYSQL_USER:-symfony}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ChangeMe}
+    volumes:
+      - db-data:/var/lib/mysql:rw
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+  ###< doctrine/doctrine-bundle ###
+
+volumes:
+  ###> doctrine/doctrine-bundle ###
+  db-data:
+  ###< doctrine/doctrine-bundle ###
