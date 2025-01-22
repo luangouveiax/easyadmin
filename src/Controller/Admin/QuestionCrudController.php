@@ -23,12 +23,17 @@ class QuestionCrudController extends AbstractCrudController
     {
         yield IdField::new('id')
             ->onlyOnIndex();
+
         yield AssociationField::new('topic');
+
         yield Field::new('name');
+
         yield TextareaField::new('question')
             ->hideOnIndex();
+
         yield Field::new('votes', 'Total Votes')
             ->setTextAlign('right');
+
         yield AssociationField::new('askedBy')
             ->autocomplete()
             ->formatValue(static function ($value, Question $question): ?string {
@@ -41,6 +46,11 @@ class QuestionCrudController extends AbstractCrudController
                 $qb->andWhere('entity.enabled = :enabled')
                     ->setParameter('enabled', true);
             });
+
+        yield AssociationField::new('answers')
+            ->autocomplete()
+            ->setFormTypeOption('by_reference', false);
+
         yield Field::new('createdAt')
             ->hideOnForm();
     }
